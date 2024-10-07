@@ -13,8 +13,20 @@ public class LoanService {
     @Autowired
     private LoanRepository loanRepository;
 
-    public Loan saveLoan(Loan loan) {
+    public Loan createLoan(Loan loan) {
         return loanRepository.save(loan);
+    }
+
+    public Loan updateLoan(Long loanId, Loan loanDetails) {
+        Loan existingLoan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new RuntimeException("Loan not found with id: " + loanId));
+        existingLoan.setAmount(loanDetails.getAmount());
+        existingLoan.setCurrency(loanDetails.getCurrency());
+        return loanRepository.save(existingLoan);
+    }
+
+    public void deleteLoan(Long loanId) {
+        loanRepository.deleteById(loanId);
     }
 
     public List<Loan> getLoansByClientId(Long clientId) {
@@ -28,5 +40,4 @@ public class LoanService {
     public Loan getLoanById(Long id) {
         return loanRepository.findById(id).orElse(null);
     }
-
 }

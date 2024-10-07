@@ -4,7 +4,6 @@ package com.kodilla.controller;
 import com.kodilla.domain.Loan;
 import com.kodilla.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,32 +12,35 @@ import java.util.List;
 @RequestMapping("/api/loan")
 public class LoanController {
 
+    private final LoanService loanService;
+
     @Autowired
-    private LoanService loanService;
+    public LoanController(LoanService loanService) {
+        this.loanService = loanService;
+    }
 
     @GetMapping("/client/{clientId}")
-    public List<Loan> getLoansByClient(@PathVariable Long clientId) {
+    public List<Loan> getLoansByClientId(@PathVariable Long clientId) {
         return loanService.getLoansByClientId(clientId);
     }
 
-    @GetMapping("/currency/{currency}")
-    public List<Loan> getLoansByCurrency(@PathVariable String currency) {
-        return loanService.getLoansByCurrency(currency);
+    @GetMapping("/{loanId}")
+    public Loan getLoanById(@PathVariable Long loanId) {
+        return loanService.getLoanById(loanId);
     }
 
     @PostMapping
     public Loan createLoan(@RequestBody Loan loan) {
-        return loanService.saveLoan(loan);
+        return loanService.createLoan(loan);
     }
 
-    @GetMapping("/{loanId}")
-    public ResponseEntity<Loan> getLoanById(@PathVariable Long loanId) {
-        Loan loan = loanService.getLoanById(loanId);
-        if (loan != null) {
-            return ResponseEntity.ok(loan);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/{loanId}")
+    public Loan updateLoan(@PathVariable Long loanId, @RequestBody Loan loanDetails) {
+        return loanService.updateLoan(loanId, loanDetails);
     }
 
+    @DeleteMapping("/{loanId}")
+    public void deleteLoan(@PathVariable Long loanId) {
+        loanService.deleteLoan(loanId);
+    }
 }

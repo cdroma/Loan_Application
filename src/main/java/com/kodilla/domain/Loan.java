@@ -1,10 +1,15 @@
 package com.kodilla.domain;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Loan {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private double amount;
@@ -14,8 +19,11 @@ public class Loan {
     private LocalDate dueDate;
     private boolean isPaidOff;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
+    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL)
     private List<Payment> payments;
 
     public Long getId() {

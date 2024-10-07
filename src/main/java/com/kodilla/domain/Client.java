@@ -1,9 +1,13 @@
 package com.kodilla.domain;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Client {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -11,6 +15,7 @@ public class Client {
     private String email;
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Loan> loans;
 
     public Long getId() {

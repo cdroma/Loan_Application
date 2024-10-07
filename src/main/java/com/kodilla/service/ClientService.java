@@ -18,15 +18,24 @@ public class ClientService {
     }
 
     public Client getClientById(Long id) {
-        return clientRepository.findById(id).orElse(null);
+        return clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
     }
 
     public Client saveClient(Client client) {
         return clientRepository.save(client);
     }
 
-    public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+    public Client updateClient(Long id, Client clientDetails) {
+        Client existingClient = getClientById(id);
+        existingClient.setName(clientDetails.getName());
+        existingClient.setEmail(clientDetails.getEmail());
+        return clientRepository.save(existingClient);
     }
 
+    public void deleteClient(Long id) {
+        if (!clientRepository.existsById(id)) {
+            throw new RuntimeException("Client not found with id: " + id);
+        }
+        clientRepository.deleteById(id);
+    }
 }

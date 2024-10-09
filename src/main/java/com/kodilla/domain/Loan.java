@@ -26,6 +26,18 @@ public class Loan {
     @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL)
     private List<Payment> payments;
 
+    public Loan() {
+    }
+
+    public Loan(double amount, String currency, double interestRate, LocalDate startDate, LocalDate dueDate, Client client) {
+        this.amount = amount;
+        this.currency = currency;
+        this.interestRate = interestRate;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+        this.client = client;
+    }
+
     public Long getId() {
         return id;
     }
@@ -96,5 +108,33 @@ public class Loan {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", currency='" + currency + '\'' +
+                ", interestRate=" + interestRate +
+                ", startDate=" + startDate +
+                ", dueDate=" + dueDate +
+                ", isPaidOff=" + isPaidOff +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Loan loan = (Loan) o;
+
+        return id != null ? id.equals(loan.id) : loan.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

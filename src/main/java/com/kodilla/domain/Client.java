@@ -18,6 +18,18 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Loan> loans;
 
+    public Client() {
+
+    }
+    public Client(Long id, String name, String surname, String email, String phoneNumber) {
+        this.id =id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+    
+
     public Long getId() {
         return id;
     }
@@ -64,5 +76,16 @@ public class Client {
 
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

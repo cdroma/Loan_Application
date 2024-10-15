@@ -21,5 +21,5 @@ Example for MySQL
 spring.datasource.url=jdbc:mysql://localhost:3306/database_name
 spring.datasource.username=username
 spring.datasource.password=password
-### Application backend adres
+### Application backend adress
 The application will be available at http://localhost:8080

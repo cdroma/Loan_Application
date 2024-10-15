@@ -40,4 +40,6 @@ public class LoanService {
     public Loan getLoanById(Long id) {
         return loanRepository.findById(id).orElse(null);
     }
+
+    public List<Loan> getAllLoans() {return loanRepository.findAll();}
 }

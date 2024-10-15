@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Loan {
@@ -130,7 +131,7 @@ public class Loan {
 
         Loan loan = (Loan) o;
 
-        return id != null ? id.equals(loan.id) : loan.id == null;
+        return Objects.equals(id, loan.id);
     }
 
     @Override

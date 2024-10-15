@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api/loan")
 public class LoanController {
@@ -33,6 +34,11 @@ public class LoanController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Loan not found");
         }
         return loan;
+    }
+
+    @GetMapping
+    public List<Loan> getAllLoans() {
+        return loanService.getAllLoans();
     }
 
     @PostMapping
